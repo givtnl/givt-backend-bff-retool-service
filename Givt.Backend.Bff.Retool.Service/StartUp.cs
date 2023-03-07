@@ -1,4 +1,6 @@
-﻿namespace Givt.Backend.Bff.Retool.Service
+﻿using Givt.Common.Library.ConfigurationExtensions;
+
+namespace Givt.Backend.Bff.Retool.Service
 {
     public class Startup
     {
@@ -15,60 +17,56 @@
             services.AddCors(); // Allows Cors for App calls
             services.AddOptions();
 
+            services.AddEndpointsApiExplorer();
             services.AddHealthChecks();
             services.AddHttpClient();
+            services.AddHttpContextAccessor();
+            services.AddApiVersioning();
+            
+            // Header Propagation
+            services.AddHeaderPropagationConfiguration();
+            
+            // Services Configuration
+            services.AddConfiguredRestClientsEndpoints(Configuration);
+            
+            // Swagger Configuration
+            services.AddSwaggerConfiguration(SwaggerSettings.Title, SwaggerSettings.Version, SwaggerSettings.Description, SwaggerSettings.Contact, Assembly.GetExecutingAssembly().GetName().Name);
 
             services.AddControllers();
-            services.AddSwaggerGen();
-            services.AddSwaggerGen(config =>
-            {
-                config.SwaggerDoc(SwaggerSettings.Version, new OpenApiInfo
-                {
-                    Title = SwaggerSettings.Title,
-                    Version = SwaggerSettings.Version,
-                    Description = SwaggerSettings.Description,
-                    Contact = SwaggerSettings.Contact
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                config.IncludeXmlComments(xmlPath);
-            });
-
+            
             #region AppConfigurations
 
             services.Configure<ApplicationSettings>(options => Configuration.GetSection("ApplicationSettings").Bind(options));
-            
+
             #endregion
 
             #region Scopes
 
-            services.AddScoped<INotificationService, NotificationService>();            
+            services.AddScoped<INotificationService, NotificationService>();
 
             #endregion
 
             #region Model Validators
 
-            services.AddScoped<IValidator<Model.Notification>, NotificationValidator>();
+            services.AddScoped<IValidator<BffModels.Notification>, NotificationValidator>();
 
             #endregion
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();                
-                app.UseSwaggerUI(config =>
-                {
-                    config.SwaggerEndpoint(SwaggerSettings.Endpoint, SwaggerSettings.Title);                    
-                });
-            }
+            app.UseRouting();                        
+            app.UseStaticFiles();
+            app.UseAuthorization();
+            app.UseHttpsRedirection();
+            app.UseHeaderPropagation();
+
+            // Exception Handling
+            app.AddExceptionHandlerConfiguration();
+
+            app.AddSwaggerConfiguration(env, SwaggerSettings.Endpoint, SwaggerSettings.Title);
 
             app.MapHealthChecks("/liveliness");
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseAuthorization();            
+            app.MapControllers();
             app.Run();
         }
     }
