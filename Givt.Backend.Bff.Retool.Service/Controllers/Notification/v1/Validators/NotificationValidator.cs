@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1
 {
-    public class NotificationValidator : AbstractValidator<Model.Notification>
+    public class NotificationValidator : AbstractValidator<BffModels.Notification>
     {
         private readonly ApplicationSettings _applicationSettings;
 

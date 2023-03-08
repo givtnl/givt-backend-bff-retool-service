@@ -1,6 +1,4 @@
-﻿
-
-namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1
+﻿namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1
 {
     [ApiController]
     [ApiVersion("1.0")]

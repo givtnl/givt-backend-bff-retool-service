@@ -2,6 +2,6 @@
 {
     public class CreateUsersNotificationsRequest
     {
-        public Model.Notification Notification { get; set; }
+        public BffModels.Notification Notification { get; set; }
     }
 }
