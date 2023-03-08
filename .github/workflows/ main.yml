@@ -24,8 +24,8 @@ jobs:
         with:
           file: .ci/Dockerfile
           build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-            GITHUB_ACTOR=${{ secrets.GITHUB_ACTOR }}
+            GITHUB_TOKEN=${{ vars.GITHUB_TOKEN }}
+            GITHUB_ACTOR=${{ vars.GITHUB_ACTOR }}
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
