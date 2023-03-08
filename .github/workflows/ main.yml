@@ -10,22 +10,25 @@ jobs:
   docker-build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Setup nuget package source
+        run: ddotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
+
+      - name: .NET Publish
+        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput src
 
       - name: Build and push the Docker image
         uses: docker/build-push-action@v3
         with:
-          file: .ci/Dockerfile
-          build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-            GITHUB_ACTOR=${{ github.actor }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          file: .ci/Dockerfileß
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
@@ -60,7 +63,7 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           namespace: default
-          manifests: | 
+          manifests: |
             .kube-manifests/deployment.yaml
             .kube-manifests/service.yaml
             .kube-manifests/ingress.yaml
@@ -78,7 +81,6 @@ jobs:
       - name: deploy
         # fake step
         uses: actions/checkout@v3
-
 
   deployment-prod-US:
     runs-on: ubuntu-22.04
