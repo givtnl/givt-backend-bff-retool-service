@@ -21,7 +21,7 @@ jobs:
         run: dotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
 
       - name: .NET Publish
-        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput src
+        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput ./Givt.Backend.Bff.Retool.Service
 
       - name: Build and push the Docker image
         uses: docker/build-push-action@v3
