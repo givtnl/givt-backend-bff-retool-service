@@ -1,12 +1,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 ARG GITHUB_TOKEN
+ARG GITHUB_ACTOR
+
 
 WORKDIR /app
 
 # Copy everything
 COPY ./ ./
 
-RUN dotnet nuget add source --username USERNAME --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
+RUN dotnet nuget add source --username $GITHUB_ACTOR --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
 
 RUN dotnet restore
 

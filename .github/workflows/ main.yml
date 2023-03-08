@@ -23,7 +23,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           file: .ci/Dockerfile
-          build-args: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          build-args: |
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            GITHUB_ACTOR=${{ secrets.GITHUB_ACTOR }}
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
