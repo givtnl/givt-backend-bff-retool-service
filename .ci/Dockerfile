@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy everything
 COPY ./ ./
 
-RUN dotnet nuget add source --username MaikelStuivenberg --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
+RUN dotnet nuget add source -u MaikelStuivenberg -p $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/givtnl/index.json"
 
 RUN dotnet restore
 
