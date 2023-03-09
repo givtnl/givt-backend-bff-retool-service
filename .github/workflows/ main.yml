@@ -80,7 +80,7 @@ jobs:
             .kube-manifests/service.yaml
             .kube-manifests/ingress.yaml
           images: |
-            traefik/whoami:latest
+            givt/givt-backend-bff-retool-service:${{ github.sha }}
 
   deployment-prod-EU:
     runs-on: ubuntu-22.04
