@@ -83,7 +83,7 @@ jobs:
             .kube-manifests/service.yaml
             .kube-manifests/ingress.yaml
           images: |
-            givt/givt-backend-bff-retool-service:${{ github.sha }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:${{ github.sha }}
 
   deployment-prod-EU:
     runs-on: ubuntu-22.04
