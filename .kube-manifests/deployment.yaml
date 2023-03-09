@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: givtapp-deployment
+  name: givt-backend-bff-retool-service
   labels:
-    app: givtapp
+    app: givt-backend-bff-retool-service
 
 spec:
   replicas: 1
