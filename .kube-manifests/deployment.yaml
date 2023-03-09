@@ -22,4 +22,4 @@ spec:
         image: givt/givt-backend-bff-retool-service:latest
         ports:
           - name: web
-          - containerPort: 80
+            containerPort: 80
