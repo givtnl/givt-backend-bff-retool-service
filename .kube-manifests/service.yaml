@@ -5,8 +5,9 @@ metadata:
 
 spec:
   ports:
-    - name: givt-backend-bff-retool-service
+    - name: web
       port: 80
+      protocol: TCP
       targetPort: web 
 
   selector:
