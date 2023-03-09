@@ -19,7 +19,7 @@ jobs:
 
 
       - name: Setup nuget package source
-        run: dotnet nuget add source "https://nuget.pkg.github.com/givtnl/index.json" --store-password-in-clear-text -n github -u jul-reb -p ${{ secrets.NUGET_GET_TOKEN }}
+        run: dotnet nuget add source "https://nuget.pkg.github.com/givtnl/index.json" --store-password-in-clear-text -n github -u jul-reb -p ${{ secrets.NUGET_GET_TOKEN_JULIAN }}
 
       - name: .NET Restore
         run: dotnet restore
