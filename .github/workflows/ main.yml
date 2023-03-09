@@ -25,7 +25,7 @@ jobs:
         run: dotnet restore
 
       - name: .NET Publish
-        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput ./Givt.Backend.Bff.Retool.Service
+        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput ./Givt.Backend.Bff.Retool.Service/Givt.Backend.Bff.Retool.Service.csproj
 
       - name: Build and push the Docker image
         uses: docker/build-push-action@v3
