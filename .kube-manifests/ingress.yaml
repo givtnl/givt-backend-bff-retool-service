@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: givt-backend-bff-retool-service-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /bff-retool
+        pathType: Prefix
+        backend:
+          service:
+            name: givt-backend-bff-retool-service # Service name defines internal IP to route to
+            port:
+              name: web # webSecure can be used here if the app is exposed on 443

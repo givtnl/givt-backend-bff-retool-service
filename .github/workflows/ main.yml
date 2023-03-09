@@ -1,0 +1,110 @@
+name: Build & Deploy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Setup nuget package source
+        run: dotnet nuget add source "https://nuget.pkg.github.com/givtnl/index.json" --store-password-in-clear-text -n github -u jul-reb -p ${{ secrets.NUGET_GET_TOKEN_JULIAN }}
+
+      - name: .NET Restore
+        run: dotnet restore
+
+      - name: .NET Publish
+        run: dotnet publish --configuration Release --nologo -p:CI=true -o $GITHUB_WORKSPACE/buildOutput ./Givt.Backend.Bff.Retool.Service/Givt.Backend.Bff.Retool.Service.csproj
+    
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push the Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .ci/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:${{ github.sha }}
+
+  deployment-test-US:
+    runs-on: ubuntu-22.04
+    needs: docker-build
+    environment:
+      name: test-us
+      url: https://google.com
+    steps:
+      - name: deploy
+        # fake step
+        uses: actions/checkout@v3
+
+  deployment-test-EU:
+    runs-on: ubuntu-22.04
+    needs: docker-build
+    environment:
+      name: test-eu
+      url: https://google.com
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: azure/setup-kubectl@v3
+        id: install
+
+      - name: Log in to K8S
+        uses: Azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.DEV_EU_KUBECONF }}
+
+      - name: Deploy to the Kubernetes cluster
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: default
+          manifests: | 
+            .kube-manifests/deployment.yaml
+            .kube-manifests/service.yaml
+            .kube-manifests/ingress.yaml
+          images: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:${{ github.sha }}
+
+  deployment-prod-EU:
+    runs-on: ubuntu-22.04
+    needs: deployment-test-EU
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: prod-eu 
+      url: https://github.com
+    steps:
+      - name: deploy
+        # fake step
+        uses: actions/checkout@v3
+
+  deployment-prod-US:
+    runs-on: ubuntu-22.04
+    needs: deployment-test-US
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: prod-us
+      url: https://github.com
+    steps:
+      - name: deploy
+        # fake step
+        uses: actions/checkout@v3

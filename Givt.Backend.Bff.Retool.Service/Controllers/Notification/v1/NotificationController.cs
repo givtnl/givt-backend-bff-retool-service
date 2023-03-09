@@ -13,6 +13,11 @@
             _notificationService = notificationService;
         }
 
+        [HttpGet()]
+        public string TestEndpoint(){
+            return "IT WORKS";
+        }
+
         [HttpPost("UserNotifications")]
         public async Task<bool> CreateUsersNotifications([FromBody] CreateUsersNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
         {

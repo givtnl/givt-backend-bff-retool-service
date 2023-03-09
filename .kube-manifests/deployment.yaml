@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: givt-backend-bff-retool-service
+  labels:
+    app: givt-backend-bff-retool-service
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: givt-backend-bff-retool-service
+
+  template:
+    metadata:
+      labels:
+        app: givt-backend-bff-retool-service
+
+    spec:
+      containers:
+      - name: givt-backend-bff-retool-service
+        image: givt/givt-backend-bff-retool-service:latest
+        ports:
+          - name: web
+            containerPort: 80
