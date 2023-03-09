@@ -17,7 +17,6 @@ jobs:
         with:
           dotnet-version: 7.0.x
 
-
       - name: Setup nuget package source
         run: dotnet nuget add source "https://nuget.pkg.github.com/givtnl/index.json" --store-password-in-clear-text -n github -u jul-reb -p ${{ secrets.NUGET_GET_TOKEN_JULIAN }}
 
@@ -64,6 +63,8 @@ jobs:
       name: test-eu
       url: https://google.com
     steps:
+      - uses: actions/checkout@v3
+
       - uses: azure/setup-kubectl@v3
         id: install
 
@@ -89,7 +90,7 @@ jobs:
     needs: deployment-test-EU
     if: github.ref == 'refs/heads/main'
     environment:
-      name: prod-eu
+      name: prod-eu 
       url: https://github.com
     steps:
       - name: deploy
