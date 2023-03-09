@@ -19,6 +19,7 @@ spec:
     spec:
       containers:
       - name: givt-backend-bff-retool-service
-        image: ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:${{ github.sha }}
+        image: givt/givt-backend-bff-retool-service:latest
         ports:
-        - containerPort: 80
+          - name: web
+          - containerPort: 80
