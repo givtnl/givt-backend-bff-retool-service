@@ -32,7 +32,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          file: .ci/Dockerfileß
+          file: .ci/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
