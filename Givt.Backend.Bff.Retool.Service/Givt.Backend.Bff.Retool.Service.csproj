@@ -13,8 +13,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.5.1" />
-    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="2023.3.7.1148-Alpha" />
-    <PackageReference Include="Givt.Common.Library" Version="2023.3.7.2206-Alpha" />
+    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="1.0.0" />
+    <PackageReference Include="Givt.Common.Library" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
