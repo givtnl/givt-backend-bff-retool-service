@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
       - name: givt-backend-bff-retool-service
-        image: givt-backend-bff-retool-service:latest
+        image: givt/givt-backend-bff-retool-service:latest
         ports:
         - containerPort: 80
