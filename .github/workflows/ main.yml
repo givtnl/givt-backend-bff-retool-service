@@ -35,9 +35,7 @@ jobs:
           context: .
           file: .ci/Dockerfile
           push: true
-          tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/givt-backend-bff-retool-service:latest
 
   deployment-test-US:
     runs-on: ubuntu-22.04
