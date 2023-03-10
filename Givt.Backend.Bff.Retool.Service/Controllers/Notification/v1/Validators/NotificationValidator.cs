@@ -1,20 +1,14 @@
-﻿using FluentValidation;
-using Givt.Backend.Bff.Retool.Service.Configurations;
-using Microsoft.Extensions.Options;
-
-namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1
+﻿namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1
 {
-    public class NotificationValidator : AbstractValidator<BffModels.Notification>
+    public class NotificationValidator : AbstractValidator<SendPushNotificationsRequest>
     {
         private readonly ApplicationSettings _applicationSettings;
+        private readonly NotificationConfiguration _notificationConfiguration;
 
-        public NotificationValidator(IOptions<ApplicationSettings> applicationSettings)
+        public NotificationValidator(IOptions<ApplicationSettings> applicationSettings, IOptions<NotificationConfiguration> notificationConfiguration)
         {
             _applicationSettings = applicationSettings.Value;
-
-            RuleFor(model => model.Message)
-                .NotEmpty()
-                    .WithMessage("Message_Error");
+            _notificationConfiguration = notificationConfiguration.Value;
         }
     }
 }

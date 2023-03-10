@@ -2,7 +2,7 @@
 {
     public interface INotificationService
     {
-        [HttpPost("UserNotifications")]
-        Task<bool> CreateUsersNotifications([FromBody] CreateUsersNotificationsRequest request, [FromHeader] CancellationToken cancelationToken);
+        [HttpPost("send-pushnotifications")]
+        Task<SendPushNotificationsResponse> SendPushNotifications([FromBody] SendPushNotificationsRequest request, [FromHeader] CancellationToken cancelationToken);
     }
 }

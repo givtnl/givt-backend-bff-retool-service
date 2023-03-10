@@ -14,9 +14,9 @@
         }
 
         [HttpPost("UserNotifications")]
-        public async Task<bool> CreateUsersNotifications([FromBody] CreateUsersNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
+        public async Task<SendPushNotificationsResponse> CreateUsersNotifications([FromBody] SendPushNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
         {
-            return await _notificationService.CreateUsersNotifications(request, cancelationToken);
+            return await _notificationService.SendPushNotifications(request, cancelationToken);
         }
     }
 }

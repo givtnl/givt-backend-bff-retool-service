@@ -11,20 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.5.1" />
-    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="2023.3.7.1148-Alpha" />
+    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="1.0.0.1803-Alpha" />
     <PackageReference Include="Givt.Common.Library" Version="2023.3.7.2206-Alpha" />
+    <PackageReference Include="Mapster" Version="7.3.0" />
+    <PackageReference Include="Mapster.Core" Version="1.2.0" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Notification\v1\Models\" />
-    <Folder Include="Controllers\Notification\v1\Requests\" />
-    <Folder Include="Controllers\Notification\v1\Responses\" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
