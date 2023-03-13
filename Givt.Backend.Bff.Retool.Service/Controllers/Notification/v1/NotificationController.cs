@@ -13,7 +13,7 @@
             _notificationService = notificationService;
         }
 
-        [HttpPost("UserNotifications")]
+        [HttpPost("send-pushnotifications")]
         public async Task<SendPushNotificationsResponse> CreateUsersNotifications([FromBody] SendPushNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
         {
             return await _notificationService.SendPushNotifications(request, cancelationToken);

@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.5.1" />
-    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="1.0.0.1803-Alpha" />
+    <PackageReference Include="Givt.Backend.Core.Notification.Contracts" Version="1.0.2-prerelease-20230313182158" />
+    <PackageReference Include="Givt.Common.Contracts" Version="1.0.0-prerelease-20230313135954" />
     <PackageReference Include="Givt.Common.Library" Version="2023.3.7.2206-Alpha" />
     <PackageReference Include="Mapster" Version="7.3.0" />
     <PackageReference Include="Mapster.Core" Version="1.2.0" />

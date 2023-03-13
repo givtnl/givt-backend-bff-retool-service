@@ -6,6 +6,6 @@
 
         public List<BffModels.Detail> Details { get; set; }
 
-        public BffModels.Content Contents { get; set; }
+        public BffModels.Content Content { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-
-namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1;
+﻿namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1;
 
 public class NotificationService : INotificationService
 {
@@ -21,14 +18,19 @@ public class NotificationService : INotificationService
 
         var coreNotificationRequest = request.Adapt<CoreModels.CreateNotificationsRequest>();
 
+        if(coreNotificationRequest == null)
+            throw new ArgumentNullException(nameof(coreNotificationRequest));
+
         // Call to the core(domain) service
-        //var responseCore = await _notificationCoreService.CreateNotifications(new CoreModels.CreateNotificationsRequest(), cancelationToken); 
-        
-        return new SendPushNotificationsResponse() { 
-            AffectedUsers = 50,
-            BatchSize = 50,
-            QueuedMessages = 50,
-            Sucess = true
+        var result = await _notificationCoreService.CreateNotifications(coreNotificationRequest, cancelationToken);                
+
+        return new SendPushNotificationsResponse
+        {
+            AffectedUsers = result.Item.AffectedUsers,
+            BatchSize = result.Item.BatchSize,
+            QueuedMessages = result.Item.QueuedMessages,
+            Sucess = !result.IsError,
+            ErrorMessage = result.IsError ? result.ErrorMessage : string.Empty 
         };
     }
 }

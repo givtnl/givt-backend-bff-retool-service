@@ -1,1 +1,13 @@
+global using FluentValidation;
+global using Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1;
+global using Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1.Requests.v1;
+global using Givt.Backend.Bff.Retool.Service.Tests.Data;
+global using Givt.Backend.Core.Notification.Contracts.Notification.v1;
+global using Givt.Backend.Core.Notification.Contracts.Notification.v1.Models;
+global using Givt.Backend.Core.Notification.Contracts.Notification.v1.Responses;
+global using Givt.Common.Contracts.Responses;
+global using Mapster;
+global using MapsterMapper;
+global using Moq;
+global using System.Reflection;
 global using Xunit;

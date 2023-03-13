@@ -4,6 +4,7 @@ global using Givt.Backend.Bff.Retool.Service.Configurations;
 global using Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1;
 global using Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1.Requests.v1;
 global using Givt.Backend.Core.Notification.Contracts.Notification.v1;
+global using Givt.Common.Contracts.Responses;
 global using Givt.Common.Library.ConfigurationExtensions;
 global using Mapster;
 global using Microsoft.AspNetCore.Mvc;
