@@ -1,4 +1,4 @@
-﻿using Givt.Common.Library.ConfigurationExtensions;
+﻿using MapsterMapper;
 
 namespace Givt.Backend.Bff.Retool.Service
 {
@@ -20,8 +20,14 @@ namespace Givt.Backend.Bff.Retool.Service
             services.AddEndpointsApiExplorer();
             services.AddHealthChecks();
             services.AddHttpClient();
-            services.AddHttpContextAccessor();
-            services.AddApiVersioning();
+            services.AddHttpContextAccessor();            
+
+            var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+            // scans the assembly and gets the IRegister, adding the registration to the TypeAdapterConfig
+            typeAdapterConfig.Scan(Assembly.GetExecutingAssembly());            
+
+            // Mapster Mapper Configuration
+            services.RegisterNotificationMappings();
             
             // Header Propagation
             services.AddHeaderPropagationConfiguration();
@@ -37,6 +43,7 @@ namespace Givt.Backend.Bff.Retool.Service
             #region AppConfigurations
 
             services.Configure<ApplicationSettings>(options => Configuration.GetSection("ApplicationSettings").Bind(options));
+            services.Configure<NotificationConfiguration>(options => Configuration.GetSection("NotificationConfiguration").Bind(options));
 
             #endregion
 
@@ -48,7 +55,7 @@ namespace Givt.Backend.Bff.Retool.Service
 
             #region Model Validators
 
-            services.AddScoped<IValidator<BffModels.Notification>, NotificationValidator>();
+            services.AddScoped<IValidator<SendPushNotificationsRequest>, NotificationValidator>();
 
             #endregion
         }

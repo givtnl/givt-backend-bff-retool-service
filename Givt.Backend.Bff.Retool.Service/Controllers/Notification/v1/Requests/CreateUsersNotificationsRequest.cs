@@ -1,7 +1,0 @@
-﻿namespace Givt.Backend.Bff.Retool.Service.Controllers.Notification.v1.Requests.v1
-{
-    public class CreateUsersNotificationsRequest
-    {
-        public BffModels.Notification Notification { get; set; }
-    }
-}

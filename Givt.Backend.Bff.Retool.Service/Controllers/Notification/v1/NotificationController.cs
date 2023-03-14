@@ -2,7 +2,7 @@
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")] //either use this a version 1.0, 2.0, 3.0, ... or the folder style
+    [Route("api/v1/[controller]")]
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
@@ -13,10 +13,10 @@
             _notificationService = notificationService;
         }
 
-        [HttpPost("UserNotifications")]
-        public async Task<bool> CreateUsersNotifications([FromBody] CreateUsersNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
+        [HttpPost("send-pushnotifications")]
+        public async Task<SendPushNotificationsResponse> CreateUsersNotifications([FromBody] SendPushNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
         {
-            return await _notificationService.CreateUsersNotifications(request, cancelationToken);
+            return await _notificationService.SendPushNotifications(request, cancelationToken);
         }
     }
 }

@@ -2,25 +2,35 @@
 
 public class NotificationService : INotificationService
 {
-    private readonly  INotificationCoreService _notificationCoreService;
+    private readonly INotificationCoreService _notificationCoreService;
+    private readonly IValidator<SendPushNotificationsRequest> _validator;
 
-    public NotificationService(INotificationCoreService notificationCoreService)
+
+    public NotificationService(INotificationCoreService notificationCoreService, IValidator<SendPushNotificationsRequest> validator)
     {
         _notificationCoreService = notificationCoreService;
+        _validator = validator;
     }
 
-    public async Task<bool> CreateUsersNotifications([FromBody] CreateUsersNotificationsRequest request, [FromHeader] CancellationToken cancelationToken)
+    public async Task<SendPushNotificationsResponse> SendPushNotifications(SendPushNotificationsRequest request, CancellationToken cancelationToken)
     {
+        var validatorResult = _validator.Validate(request);
+
+        var coreNotificationRequest = request.Adapt<CoreModels.CreateNotificationsRequest>();
+
+        if(coreNotificationRequest == null)
+            throw new ArgumentNullException(nameof(coreNotificationRequest));
+
         // Call to the core(domain) service
-        var responseCore = await _notificationCoreService.CreateNotifications(new CoreModels.CreateNotificationsRequest()
+        var result = await _notificationCoreService.CreateNotifications(coreNotificationRequest, cancelationToken);                
+
+        return new SendPushNotificationsResponse
         {
-            Notification = new CoreModels.Notification()
-            {
-                Title = "Title",
-                Message = "Message"
-            }
-        }, cancelationToken); 
-        
-        return true;
+            AffectedUsers = result.Item.AffectedUsers,
+            BatchSize = result.Item.BatchSize,
+            QueuedMessages = result.Item.QueuedMessages,
+            Sucess = !result.IsError,
+            ErrorMessage = result.IsError ? result.ErrorMessage : string.Empty 
+        };
     }
 }

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Givt.Backend.Bff.Retool.Service.Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59499;http://localhost:59500"
+    }
+  }
+}
