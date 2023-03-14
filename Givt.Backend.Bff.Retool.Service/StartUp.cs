@@ -20,8 +20,7 @@ namespace Givt.Backend.Bff.Retool.Service
             services.AddEndpointsApiExplorer();
             services.AddHealthChecks();
             services.AddHttpClient();
-            services.AddHttpContextAccessor();
-            services.AddApiVersioning();
+            services.AddHttpContextAccessor();            
 
             var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
             // scans the assembly and gets the IRegister, adding the registration to the TypeAdapterConfig
